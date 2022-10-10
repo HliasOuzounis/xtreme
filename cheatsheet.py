@@ -99,7 +99,7 @@ def bfs_shortest_path(graph, start_node, target_node):
 
 def all_common_divisors(n1, n2):
     """
-    Generators that returns all common divisors of two numbers (except 1)
+    Generator that returns all common divisors of two numbers in descending order (except 1)
     """
     if n2 % n1 == 0:
         yield n1

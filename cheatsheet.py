@@ -92,3 +92,18 @@ def bfs_shortest_path(graph, start_node, target_node):
                     queue.append((neighbour, dist + 1))
 
     return (-1, {})
+
+
+# ---------------- Integers ---------------- #
+
+
+def all_common_divisors(n1, n2):
+    """
+    Generators that returns all common divisors of two numbers (except 1)
+    """
+    if n2 % n1 == 0:
+        yield n1
+    n1, n2 = min(n1, n2), max(n1, n2)
+    for i in range(int(n1 // 2) + 1, 1, -1):
+        if n1 % i == 0 and n2 % i == 0:
+            yield i

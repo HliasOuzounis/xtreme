@@ -39,13 +39,13 @@ def run_test():
 
     new_seq1 = []
     new_seq2 = []
-    sums = [0, 0]
+    # sums = [0, 0]
     first_right = n % 2
     # print("sorted: ", sorted(sequence, reverse=True))
     for num in sorted(sequence, reverse=True):
         if new_seq1 and (new_seq1[0] == new_seq1[-1] and len(new_seq1) > 1) or num == 0:
-            sums[0] += num * new_seq1[0]
-            sums[1] += num * new_seq2[0]
+            # sums[0] += num * new_seq1[0]
+            # sums[1] += num * new_seq2[0]
 
             prepend(new_seq1, num)
             prepend(new_seq2, num)
@@ -54,19 +54,19 @@ def run_test():
             continue
 
         if first_right:
-            if new_seq1:
-                sums[0] += num * new_seq1[-1]
+            # if new_seq1:
+                # sums[0] += num * new_seq1[-1]
             new_seq1.append(num)
 
-            if new_seq2:
-                sums[1] += num * new_seq2[0]
+            # if new_seq2:
+                # sums[1] += num * new_seq2[0]
             prepend(new_seq2, num)
         else:
-            if new_seq2:
-                sums[1] += num * new_seq2[-1]
+            # if new_seq2:
+                # sums[1] += num * new_seq2[-1]
             new_seq2.append(num)
-            if new_seq1:
-                sums[0] += num * new_seq1[0]
+            # if new_seq1:
+                # sums[0] += num * new_seq1[0]
             prepend(new_seq1, num)
 
         first_right = not first_right
@@ -75,17 +75,29 @@ def run_test():
         sums[0] = new_seq1[0]
 
     # print(new_seq1, new_seq2)
-    if sums[1] == sums[0]:
-        print(sums[0])
-        print_seq(smallest_sequence(new_seq1, new_seq2))
-    elif sums[1] > sums[0]:
-        print(sums[1])
+    # if sums[1] == sums[0]:
+        # print(sums[0])
+        # print_seq(smallest_sequence(new_seq1, new_seq2))
+    # elif sums[1] > sums[0]:
+        # print(sums[1])
+        # print_seq(new_seq2)
+    # else:
+        # print(sums[0])
+        # print_seq(new_seq1)
+
+    sum1 = sum_seq(new_seq1)
+    sum2 = sum_seq(new_seq2)
+    print(max(sum1, sum2))
+    if sum1 > sum2:
+        print_seq(new_seq1)
+    elif sum2 > sum1:
         print_seq(new_seq2)
     else:
-        print(sums[0])
-        print_seq(new_seq1)
+        print_seq(smallest_sequence(new_seq1, new_seq2))
     return
-            
+
+def sum_seq(seq):
+    return sum(seq[i] * seq[i+1] for i in range(len(seq) - 1))
 
 def print_seq(sequence):
     for num in sequence:

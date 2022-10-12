@@ -49,13 +49,9 @@ def sort_smallest(seq, max_num):
 
     index_max_num = seq.index(max_num)
 
-    for i in range(len(seq)//2 + 1):
-        if seq[i] < seq[-(i+1)]:
-            break
-        if seq[i] > seq[-(i+1)]:
-            seq = seq[::-1]
-            break
-    
+    if seq[0] > seq[-1]:
+        seq[:] = seq[::-1]
+        
     for i in range(index_max_num):
         k = 1
         while seq[-k] < seq[i]:

@@ -40,7 +40,10 @@ def solve():
 
 def get_char(block, letters, num, string_pos):
     from string import ascii_lowercase
-
+    # example:
+    # num = 1234, letters = 10, string_pos = 2 -> return '2' => 'c'
+    # mod1 = 234, mod2 = 34
+    # char_id = (234 - 34)/100 = 200/100 = 2
     mod1 = num % letters ** (block - string_pos + 1)
     mod2 = mod1 % letters ** (block - string_pos)
     char_id = (mod1 - mod2) // letters ** (block - string_pos)
@@ -54,13 +57,10 @@ def find_block(letters, index):
     and get the relative index to the start of the block
     """
     block = 1
-    block_size = letters * block
-    while index > block_size:
-        index -= block_size
+    while index > letters**block:
+        index -= letters**block
         block += 1
-        block_size = letters**block * block
     return block, index
-
 
 
 def main():

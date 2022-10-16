@@ -107,3 +107,43 @@ def all_common_divisors(n1, n2):
     for i in range(int(n1 // 2) + 1, 1, -1):
         if n1 % i == 0 and n2 % i == 0:
             yield i
+
+
+def gcd_Euclid(a, b):  # sourcery skip: assign-if-exp, reintroduce-else
+    """
+    returns the greatest common divisor of two numbers a, b (a < b)
+    """
+    if b == 0:
+        return a
+    return gcd_Euclid(b, a % b)
+
+# ---------------- Modulo ---------------- #
+# https://sites.math.washington.edu//~greenber/Congruences.pdf
+
+MOD = 10**9 + 7
+
+
+def mod_inverse_prime(a):
+    """
+    Get the modular inverse of a assuming mod is prime
+    using Fermat's little theorem
+    a**(p-1) = 1 mod p
+    """
+    # Python's pow method returns base**exp % mod
+    return pow(base=a, exp=MOD - 2, mod=MOD)
+
+
+def nCr_with_mod(n, r):
+    """
+    Efficiently calculate nCr(n, r) % mod, mod is prime
+    """
+    r = min(r, n - r)
+
+    numerator = 1
+    denominator = 1
+
+    for i in range(r):
+        numerator = (numerator * (n - i)) % MOD
+        denominator = (denominator * (i + 1)) % MOD
+
+    return (numerator * mod_inverse(denominator)) % MOD

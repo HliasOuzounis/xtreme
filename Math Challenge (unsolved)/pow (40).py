@@ -30,7 +30,7 @@ def calculate_power(a, power):
     return pow(a, power, MOD)
 
 
-def nCr_with_mod(n, r):
+def nCr(n, r):
     r = min(r, n - r)
 
     numerator = 1
@@ -50,7 +50,7 @@ def main():
         if a == 1:
             print("1")
             continue
-        power = nCr_with_mod(b, c)
+        power = nCr(b, c)
         print(calculate_power(a, power))
 
 

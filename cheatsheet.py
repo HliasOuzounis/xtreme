@@ -68,10 +68,10 @@ def bfs_iter(graph, starting_vertex):
 
 def bfs_shortest_path(graph, start_node, target_node):
     """
-    Bfs implementation to fins the shortest path between two nodes.
+    Bfs implementation to find the shortest path between two nodes.
     Graph must not have weighted edges.
 
-    returns distance between the nodes (-1 if they are npot connected)
+    returns distance between the nodes (-1 if they are not connected)
             dictionary with the shortest path {node: previous node}
     """
     visited = [False] * len(graph)

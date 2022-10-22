@@ -1,0 +1,21 @@
+1
+19
+say Hokey Pokey
+say You put your right foot in
+right leg in
+say You put your right foot out
+right leg out
+say You put your right foot in
+right leg in
+say Shake it all about
+left hand to head
+right hand to hip
+left hand to hip
+right hand to head
+say You do the hokey pokey and you turn yourself around
+turn
+turn
+say That's what it's all about!
+right leg out
+right hand to start
+left hand to start

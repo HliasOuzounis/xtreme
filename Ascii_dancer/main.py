@@ -2,15 +2,15 @@ from copy import deepcopy
 def solve(s):
 	# print(s)
 	n_s = deepcopy(s)
-	print(n_s)
-	m_dicti = {">":"<" , "/":"\\" , ")":"("}
+	# print(n_s)
+	m_dicti = {">": "<", "/": "\\", ")": "(", "<": ">", "\\": "/", "(": ")"}
 	# top 
 	n_s[0],n_s[2] = s[2],s[0]
 	n_s[4],n_s[6] = s[6],s[4]
 	n_s[8],n_s[10] = s[10],s[8]
-	for limb in n_s:
+	for i,limb in enumerate(n_s):
 		if limb in m_dicti.keys():
-			limb = m_dicti[limb]
+			n_s[i] = m_dicti[limb]
 			
 
 		# if s[4] == " ":
@@ -20,8 +20,8 @@ def solve(s):
 		# elif s[4] == "/":
 		# 	n_s[6] == "\\"		 
 	# print(''.join(n_s))
-	print(n_s)
-	return s
+	# print(n_s)
+	return n_s
 
 
 def m_paser(t_line,p_hlias):
@@ -29,13 +29,14 @@ def m_paser(t_line,p_hlias):
 	if t_line[0] == "say":
 		print(' '.join(t_line[1:]))
 	else:
-		action(t_line[-4:],p_hlias)
+		p_hlias  = action(t_line[-4:],p_hlias)
+		print(''.join(p_hlias))
 	return p_hlias
 
 def action(command,p_hlias):
 	# do i turn?
 	if command[0] == "turn":
-		solve(p_hlias)
+		p_hlias = solve(p_hlias)
 		return p_hlias
 		
 	# leg or hand decision
@@ -81,7 +82,7 @@ def action(command,p_hlias):
 
 		# print("hand command")
 		# print(command)
-	print(''.join(p_hlias))
+	# print(''.join(p_hlias))
 	return p_hlias
 
 def main():
@@ -95,7 +96,7 @@ def main():
 			t_line = f.readline().split()
 		
 			hlias = m_paser(t_line,hlias)
-	# print(''.join(hlias))
+			# print(''.join(hlias))
 	# print(hlias)
 
 if __name__ == '__main__':

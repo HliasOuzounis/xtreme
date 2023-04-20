@@ -53,9 +53,14 @@ class Hashtable:
         self.duplicates_found = [0] * self.size
 
     def hash_function(self, value):
-        return hash(value) % self.size
-        # random.seed(value)
-        # return random.randint(0, self.size - 1)
+        hash_value = 0
+
+        for c in value:
+            hash_value += ord(c)
+            hash_value = hash_value * 17
+
+        # Return the hash value
+        return hash_value % self.size
 
     def insert(self, value, code):
         key = self.hash_function(value)

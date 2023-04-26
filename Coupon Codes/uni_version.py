@@ -99,11 +99,15 @@ class Hashtable:
                             break
                     print(
                         code1[:index]
-                        + "\033[44;33m" + code1[index] + "\033[0m"
-                        + code1[index + 1:],
+                        + "\033[44;33m"
+                        + code1[index]
+                        + "\033[0m"
+                        + code1[index + 1 :],
                         code2[:index]
-                        + "\033[44;33m" + code2[index] + "\033[0m"
-                        + code2[index + 1:],
+                        + "\033[44;33m"
+                        + code2[index]
+                        + "\033[0m"
+                        + code2[index + 1 :],
                     )
                     s += 1
         return s
@@ -116,7 +120,7 @@ def main():
     print(f"{nof_codes} codes generated\nStarting Calculating")
 
     hashtable = Hashtable(nof_codes * 12 * 2)
-    
+
     for i, code in enumerate(codes):
         # code = get_word()
         for index, char in enumerate(code):

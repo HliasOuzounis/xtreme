@@ -45,7 +45,7 @@ def main():
     parents = [root] * n
     depths = [0] * n
     get_parents_and_depth(root, graph, parents, depths)
-            
+    
     for u, v, k in operations:
         if u == v:
             node_values[u] += k

@@ -46,7 +46,7 @@ def solve_case():
             sol = matrix_multiply(sol, fibonacci_matrix)
         fibonacci_matrix = matrix_multiply(fibonacci_matrix, fibonacci_matrix)
         n //= 2
-    return sol
+    return sol[0][0]
 
 
 def main():

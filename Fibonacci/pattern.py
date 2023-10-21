@@ -23,21 +23,37 @@ def get_number():
         return float(data)
 
 
-pattern = [0, 1, 1, 2, 3, 5, 8, 3, 1, 4, 5, 9, 4, 3, 7, 0, 7, 7, 4, 1, 5, 6, 1, 7, 8, 5, 3, 8, 1, 9,
-           0, 9, 9, 8, 7, 5, 2, 7, 9, 6, 5, 1, 6, 7, 3, 0, 3, 3, 6, 9, 5, 4, 9, 3, 2, 5, 7, 2, 9, 1, 0]
-pattern_len = len(pattern) - 1
-# -1 beacause the true pattern cycles after 9, 1 but we add a 0 to avoid index errors (if disaster_gen % pattern_len == 59)
+def matrix_multiply(a, b):
+    c = [[0, 0],
+         [0, 0]]
+    if not a or not b:
+        return None
+    assert len(a[0]) == len(b)
+    for i in range(len(a)):
+        for j in range(len(a[0])):
+            for k in range(len(b[0])):
+                c[i][k] += a[i][j] * b[j][k]
+                c[i][k] = c[i][k] % 10
+    return c
 
 
-def solve_case(disaster_gen):
-    print(pattern[disaster_gen % pattern_len + 1])
+def solve_case():
+    fibonacci_matrix = [[1, 1], [1, 0]]
+    n = get_number()
+    sol = [[1, 0], [0, 1]]
+    while n:
+        if n % 2:
+            sol = matrix_multiply(sol, fibonacci_matrix)
+        fibonacci_matrix = matrix_multiply(fibonacci_matrix, fibonacci_matrix)
+        n //= 2
+    return sol[0][0]
 
 
 def main():
     test_cases = get_number()
-    for i in range(test_cases):
-        solve_case(_disaster_gen := get_number())
+    for _ in range(test_cases):
+        print(solve_case())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -1,5 +1,4 @@
 import functools
-from sys import maxsize
 
 inp = []
 for _ in range(101):
@@ -33,7 +32,7 @@ topics_queue = list(topics_dict.keys())
 def next_topics(queue):
     if len(queue) == 0:
         return 0
-    min_time = maxsize
+    min_time = int(1e9)
     for next_book in topics_dict[queue[-1]]:
         new_queue = tuple(x for x in queue if not books[next_book].topics.get(x))
         if len(queue) == len(new_queue):

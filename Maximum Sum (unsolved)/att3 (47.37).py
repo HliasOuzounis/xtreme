@@ -1,4 +1,7 @@
 # a simple parser for python. use get_number() and get_word() to read
+import sys
+
+
 def parser():
     while 1:
         data = list(input().split(" "))
@@ -22,8 +25,9 @@ def get_number():
     except ValueError:
         return float(data)
 
-import sys
+
 sys.setrecursionlimit(10_000)
+
 
 def best_seq(seq):
     sorted_seq = sorted(seq, reverse=True)
@@ -51,7 +55,7 @@ def sort_smallest(seq, max_num):
 
     if seq[0] > seq[-1]:
         seq[:] = seq[::-1]
-        
+
     for i in range(index_max_num):
         k = 1
         while seq[-k] < seq[i]:
@@ -59,13 +63,15 @@ def sort_smallest(seq, max_num):
         if seq[-k] == seq[i]:
             seq[i+1:-k] = sort_smallest(seq[i+1:-k], max_num)
             break
-    
+
     return [0 for _ in range(zero_count)] + seq
-    
+
+
 def sum_seq(seq):
     if len(seq) == 1:
         return seq[0]
     return sum(seq[i] * seq[i + 1] for i in range(len(seq) - 1))
+
 
 def print_seq(sequence):
     for num in sequence:

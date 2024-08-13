@@ -1,26 +1,20 @@
 import sys
 sys.setrecursionlimit(10**6)
 
-# a simple parser for python. use get_number() and get_word() to read
-def parser():
-    while 1:
-        data = list(input().split(' '))
-        for number in data:
-            if len(number) > 0:
-                yield(number)   
+input = lambda: sys.stdin.readline().rstrip()
 
-input_parser = parser()
-
-def get_word():
-    global input_parser
-    return next(input_parser)
 
 def get_number():
-    data = get_word()
-    try:
-        return int(data)
-    except ValueError:
-        return float(data)
+    return int(input())
+
+
+def get_numbers():
+    return list(map(int, input().split()))
+
+
+def get_word():
+    return input()
+
 
 cycles = set()
 from collections import defaultdict
@@ -34,30 +28,30 @@ def dfs_cycle(graph, start, parent, color):
             current_node = parents[current_node]
             cycles.add(current_node)
         return
+
     parents[start] = parent
     color[start] = 1
-    
     for node in graph[start]:
         if node == parents[start] or color[node] == 2:
             continue
         dfs_cycle(graph, node, start, color)
     color[start] = 2
+    
     return
     
 
 def main():
-    n, m = get_number(), get_number()
+    n, m = get_numbers()
     graph = defaultdict(list)
     for _ in range(m):
-        u = get_number()
-        v = get_number()
+        u, v = get_numbers()
         graph[u].append(v)
         graph[v].append(u)
         
     color = [0] * (n + 1)
+    dfs_cycle(graph, 1, -1, color)
+
     for node in graph:
-        dfs_cycle(graph, node, -1, color)
-    for node in range(1, n+1):
         if node in cycles:
             continue
         print(node)  

@@ -16,11 +16,6 @@ def get_word():
     return input()
 
 
-# numpy and scipy are available for use
-import numpy
-import scipy
-
-
 def solve_case():
     pass
 

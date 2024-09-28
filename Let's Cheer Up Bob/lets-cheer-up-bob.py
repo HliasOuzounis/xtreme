@@ -33,11 +33,11 @@ def solve_case():
     preferences = [get_numbers() for _ in range(9)]
     grid = [[0] * 3 for _ in range(3)]
 
-    moves = bfs(grid, preferences, [], 0)
+    moves = dfs(grid, preferences, [], 0)
     for move in moves:
         print(*move)
 
-def bfs(grid, preferences, moves, move_count):
+def dfs(grid, preferences, moves, move_count):
     if check_win(grid, 2):
         return [(0, 0)] * 10
     
@@ -58,7 +58,7 @@ def bfs(grid, preferences, moves, move_count):
             if not grid[r][c]:
                 g = deepcopy(grid)
                 g[r][c] = 2
-                new_moves = bfs(g, preferences, moves + [(r + 1, c + 1)], move_count + 1)
+                new_moves = dfs(g, preferences, moves + [(r + 1, c + 1)], move_count + 1)
                 if len(my_moves) > len(new_moves):
                     my_moves = new_moves
                 if len(my_moves) == len(new_moves):

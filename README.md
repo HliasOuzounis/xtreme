@@ -1,4 +1,4 @@
-# Repo for IEEE xtreme 
+# Repo for IEEE xtreme
 
 ## team: 24mbps
 

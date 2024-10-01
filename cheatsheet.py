@@ -93,6 +93,56 @@ def bfs_shortest_path(graph, start_node, target_node):
 
     return (-1, {})
 
+def dijkstra(graph, start_node):
+    """
+    Dijkstra's algorithm to find the shortest path from start_node to all other nodes
+    Graph must be a dictionary with the following structure:
+    graph = {node: [(neighbour, weight), ...]}
+    """
+    from heapq import heappush, heappop
+    distances = {node: float('inf') for node in graph}
+    distances[start_node] = 0
+    visited = set()
+    queue = [(0, start_node)]
+
+    while queue:
+        dist, node = heappop(queue)
+        if node in visited:
+            continue
+        visited.add(node)
+
+        for neighbour, weight in graph[node]:
+            if neighbour not in visited:
+                new_dist = dist + weight
+                if new_dist < distances[neighbour]:
+                    distances[neighbour] = new_dist
+                    heappush(queue, (new_dist, neighbour))
+
+    return distances
+
+def has_cycle(graph):
+    """
+    Detect if a graph has a cycle
+    """
+    visited = [False] * len(graph)
+    for start_node in graph:
+        if start_node in graph[start_node]:
+            # Self-loop
+            return True
+        if visited[start_node]:
+            continue
+        
+        stack = [start_node]
+        while stack:
+            node = stack.pop(0)
+            if visited[node]:
+                return True
+            visited[node] = True
+            for neighbour in graph[node]:
+                if not visited[neighbour]:
+                    stack.append(neighbour)
+                    
+    return False
 
 def get_depth_and_parents(graph, root):
     """
@@ -116,11 +166,12 @@ def get_depth_and_parents(graph, root):
                 
     return depths, parents
 
-def get_parents(graph, root, depths, first_parents):
+def get_ancestors(graph, root, first_parents):
     """
     Find the ancestors of each node in a tree to use in binary lifting
     """
-    LOG = int(len(graph)**0.5 + 1)
+    from math import ceil, log2
+    LOG = ceil(log2(len(graph)))
     parents = [[root] * LOG for node in graph]
 
     for node in graph:
@@ -130,13 +181,14 @@ def get_parents(graph, root, depths, first_parents):
             parents[node][i] = parents[parents[node][i - 1]][i - 1]
     return parents
 
-def get_lca(depth, parents, a, b):
+def get_lca(depth, ancestors, a, b):
     """
     Lowest Common Ancestor (LCA) using binary lifting
     Needs a tree with parents and depths
     LOG = ceil(log2(n)) where n is the number of nodes in the tree
     """
-    LOG = int(len(depth)**0.5 + 1)
+    from math import ceil, log2
+    LOG = ceil(log2(len(depth)))
     
     if depth[a] < depth[b]:
         a, b = b, a
@@ -144,17 +196,17 @@ def get_lca(depth, parents, a, b):
 
     for j in range(LOG - 1, -1, -1):
         if (k & (1<<j)):
-            a = parents[a][j]
+            a = ancestors[a][j]
     
     if a == b:
         return a
     
     for j in range(LOG - 1, -1, -1):
-        if parents[a][j] != parents[b][j]:
-            a = parents[a][j]
-            b = parents[b][j]
+        if ancestors[a][j] != ancestors[b][j]:
+            a = ancestors[a][j]
+            b = ancestors[b][j]
     
-    return parents[a][0]
+    return ancestors[a][0]
 
 # ---------------- Integers ---------------- #
 
@@ -171,13 +223,51 @@ def all_common_divisors(n1, n2):
             yield i
 
 
-def gcd_Euclid(a, b):  # sourcery skip: assign-if-exp, reintroduce-else
+def gcd_Euclid(a, b):
     """
     returns the greatest common divisor of two numbers a, b (a < b)
     """
     if b == 0:
         return a
     return gcd_Euclid(b, a % b)
+
+def fast_expontiation(base, exp, mod):
+    """
+    Fast exponentiation algorithm to calculate base**exp % mod
+    equivilant to pow(base, exp, mod) in python
+    but can be used for matrices and other types
+    """
+    result = 1
+    base %= mod
+    while exp > 0:
+        if exp % 2 == 1:
+            result = (result * base) % mod
+        base = (base * base) % mod
+        exp //= 2
+    return result
+
+def smallest_divisible(n, p):
+    """
+    Find the smallest number x (x > n) that is divisible by p
+    """
+    smallest = n // p * p
+    if smallest < n:
+        smallest += p
+    return smallest
+
+def xor_range(x):
+    """
+    Calculate the xor of all numbers from 0 to x
+    """
+    match x % 4:
+        case 0:
+            return x
+        case 1:
+            return 1
+        case 2:
+            return x + 1
+        case _:
+            return 0
 
 # ---------------- Primes ---------------- #
 
@@ -228,3 +318,17 @@ def nCr_with_mod(n, r):
         denominator = (denominator * (i + 1)) % MOD
 
     return (numerator * mod_inverse_prime(denominator)) % MOD
+
+# ----------------- STRINGS ----------------- #
+
+def lexicographically_smaller(a, b):
+    """
+    Check if iterable a is lexicographically smaller than b
+    """
+    for ai, bi in zip(a, b):
+        if ai > bi:
+            return False
+        if ai < bi:
+            return True
+    
+    return len(a) <= len(b)

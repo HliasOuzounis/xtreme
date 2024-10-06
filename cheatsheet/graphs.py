@@ -80,3 +80,38 @@ def has_cycle(graph):
                     stack.append(neighbour)
 
     return False
+
+def find_bridges(graph):
+    """
+    Find all the bridges in a graph
+    Bridges are edges that when removed increase the number of connected components
+    """
+    from collections import defaultdict
+
+    low = defaultdict(int)
+    tin = defaultdict(int)
+    timer = 0
+    
+    def dfs(node, parent, low, tin, timer):
+        low[node] = tin[node] = timer
+        timer += 1
+        
+        for child in graph[node]:
+            if child == parent:
+                continue
+            
+            if not tin[child]:
+                timer = dfs(child, node, low, tin, timer)
+                low[node] = min(low[node], low[child])
+            else:
+                low[node] = min(low[node], tin[child])
+            
+            if low[child] > tin[node]:
+                ...
+                # (node, child) is a bridge
+        
+        return timer
+    
+    for node in graph:
+        if not tin[node]:
+            timer = dfs(node, -1, low, tin, timer)

@@ -27,6 +27,9 @@ from collections import defaultdict
 parents = defaultdict(int)
 
 def dfs_cycle(graph, start, parent, color):
+    if color[start] == 2:
+        return
+    
     if color[start] == 1:
         current_node = parent
         cycles.add(current_node)
@@ -34,6 +37,7 @@ def dfs_cycle(graph, start, parent, color):
             current_node = parents[current_node]
             cycles.add(current_node)
         return
+    
     parents[start] = parent
     color[start] = 1
     
@@ -41,7 +45,9 @@ def dfs_cycle(graph, start, parent, color):
         if node == parents[start] or color[node] == 2:
             continue
         dfs_cycle(graph, node, start, color)
+        
     color[start] = 2
+    
     return
     
 

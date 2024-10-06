@@ -25,17 +25,18 @@ def solve_case():
         edges.append((u, v, w))
     
     edges.sort(key=lambda x: x[2])
-    root = list(range(n + 1))
         
+    roots = list(range(n + 1))
+    sizes = [1] * (n + 1)
+    
     total = 0
-    size = [1] * (n + 1)
     for u, v, w in edges:
-        u = find_root(root, u)
-        v = find_root(root, v)
+        u = find_root(roots, u)
+        v = find_root(roots, v)
         
-        total = (total + w * size[u] * size[v]) % MOD
-        root[v] = u
-        size[u] += size[v]
+        total = (total + w * sizes[u] * sizes[v]) % MOD
+        roots[v] = u
+        sizes[u] += sizes[v]
     
     print(total)
 

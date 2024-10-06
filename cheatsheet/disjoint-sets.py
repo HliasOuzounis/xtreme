@@ -1,27 +1,30 @@
 # ---------------- Disjoint Set Union ---------------- #
 
-# parents = [i for i in range(n)]   The root of the set each node belongs to
-# sizes = [1] * n                   The size of each set
+# root = [i for i in range(n)]   The root of the set each node belongs to
+# size = [1] * n                 The size of each set
 
-def find_root(parents, node):
+def find_root(root, node):
     """
     Find the root of a node in a disjoint set
     """
-    if parents[node] != node:
-        parents[node] = find_root(parents, parents[node])
-    return parents[node]
+    if root[node] != node:
+        root[node] = find_root(root, root[node])
+    return root[node]
 
-def union_sets(parents, sizes, a, b):
+def union_sets(root, size, a, b):
     """
     Union sets that contain a and b
-    (a is the root of the new joint set)
+    (root a is the root of the new joint set)
     """
-    a = find_root(a)
-    b = find_root(b)
+    a = find_root(root, a)
+    b = find_root(root, b)
 
-    if a != b:
-        if sizes[a] < sizes[b]:
-            a, b = b, a
-        parents[b] = a
-        sizes[a] += sizes[b]
+    if a == b:
+        return
+    
+    if size[a] < size[b]:
+        a, b = b, a
+    
+    size[a] += size[b]
+    root[b] = a
 

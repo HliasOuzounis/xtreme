@@ -48,3 +48,12 @@ def nCr_with_mod(n, r):
         denominator = (denominator * (i + 1)) % MOD
 
     return (numerator * mod_inverse_prime(denominator)) % MOD
+
+def ncr_parity(n, r):
+    """
+    True if nCr(n, r) is odd, False if even 
+    Consequence of Lucas' Theorem 
+    (https://en.wikipedia.org/wiki/Lucas%27s_theorem)
+    (https://math.stackexchange.com/a/11009)
+    """
+    return (r & (n - r)) == 0
